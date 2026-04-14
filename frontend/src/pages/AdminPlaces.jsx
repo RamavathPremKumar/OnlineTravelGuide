@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./AdminPlaces.css";
 
 const AdminPlaces = () => {
@@ -16,7 +17,6 @@ const AdminPlaces = () => {
   const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState("newest");
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   // Check authentication
   useEffect(() => {
@@ -36,18 +36,10 @@ const AdminPlaces = () => {
   const fetchPlaces = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/places`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest("/admin/places", "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setPlaces(data.data?.places || []);
-        setFilteredPlaces(data.data?.places || []);
-      }
+      setPlaces(data.data?.places || []);
+      setFilteredPlaces(data.data?.places || []);
     } catch (error) {
       console.error("Error fetching places:", error);
     } finally {
@@ -58,17 +50,9 @@ const AdminPlaces = () => {
   const fetchLocations = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/locations`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest("/admin/locations", "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setLocations(data.data?.locations || []);
-      }
+      setLocations(data.data?.locations || []);
     } catch (error) {
       console.error("Error fetching locations:", error);
     }
@@ -77,17 +61,9 @@ const AdminPlaces = () => {
   const fetchCategories = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/categories`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest("/admin/categories", "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setCategories(data.data?.categories || []);
-      }
+      setCategories(data.data?.categories || []);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -143,20 +119,12 @@ const AdminPlaces = () => {
   const confirmDelete = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/places/${placeToDelete._id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/places/${placeToDelete._id}`, "DELETE", null, token);
 
-      if (response.ok) {
-        // Remove from state
-        setPlaces(places.filter(p => p._id !== placeToDelete._id));
-        setShowDeleteModal(false);
-        setPlaceToDelete(null);
-      }
+      // Remove from state
+      setPlaces(places.filter(p => p._id !== placeToDelete._id));
+      setShowDeleteModal(false);
+      setPlaceToDelete(null);
     } catch (error) {
       console.error("Error deleting place:", error);
     }
@@ -165,20 +133,12 @@ const AdminPlaces = () => {
   const toggleStatus = async (place) => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/places/${place._id}/toggle-status`, {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/places/${place._id}/toggle-status`, "PUT", null, token);
 
-      if (response.ok) {
-        // Update local state
-        setPlaces(places.map(p => 
-          p._id === place._id ? { ...p, isActive: !p.isActive } : p
-        ));
-      }
+      // Update local state
+      setPlaces(places.map(p => 
+        p._id === place._id ? { ...p, isActive: !p.isActive } : p
+      ));
     } catch (error) {
       console.error("Error toggling status:", error);
     }

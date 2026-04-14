@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./AdminMapping.css";
 
 const AdminMapping = () => {
@@ -36,7 +37,6 @@ const AdminMapping = () => {
   const [selectedBulkHotels, setSelectedBulkHotels] = useState([]);
   const [bulkDistance, setBulkDistance] = useState(5); // km
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   // Check authentication and load data
   useEffect(() => {
@@ -68,41 +68,18 @@ const AdminMapping = () => {
       const token = localStorage.getItem("adminToken");
       
       // Load all data in parallel
-      const [hotelsRes, placesRes, locationsRes, mappingsRes] = await Promise.all([
-        fetch(`${API_URL}/api/admin/hotels`, {
-          headers: { "Authorization": `Bearer ${token}` }
-        }),
-        fetch(`${API_URL}/api/admin/places`, {
-          headers: { "Authorization": `Bearer ${token}` }
-        }),
-        fetch(`${API_URL}/api/admin/locations`, {
-          headers: { "Authorization": `Bearer ${token}` }
-        }),
-        fetch(`${API_URL}/api/admin/mappings`, {
-          headers: { "Authorization": `Bearer ${token}` }
-        })
+      const [hotelsData, placesData, locationsData, mappingsData] = await Promise.all([
+        apiRequest("/admin/hotels", "GET", null, token),
+        apiRequest("/admin/places", "GET", null, token),
+        apiRequest("/admin/locations", "GET", null, token),
+        apiRequest("/admin/mappings", "GET", null, token)
       ]);
 
-      if (hotelsRes.ok) {
-        const data = await hotelsRes.json();
-        setHotels(data.data?.hotels || []);
-      }
-
-      if (placesRes.ok) {
-        const data = await placesRes.json();
-        setPlaces(data.data?.places || []);
-        setFilteredPlaces(data.data?.places || []);
-      }
-
-      if (locationsRes.ok) {
-        const data = await locationsRes.json();
-        setLocations(data.data?.locations || []);
-      }
-
-      if (mappingsRes.ok) {
-        const data = await mappingsRes.json();
-        setExistingMappings(data.data?.mappings || []);
-      }
+      setHotels(hotelsData.data?.hotels || []);
+      setPlaces(placesData.data?.places || []);
+      setFilteredPlaces(placesData.data?.places || []);
+      setLocations(locationsData.data?.locations || []);
+      setExistingMappings(mappingsData.data?.mappings || []);
 
     } catch (error) {
       console.error("Error loading mapping data:", error);
@@ -177,34 +154,18 @@ const AdminMapping = () => {
 
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/mappings`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          hotelId: selectedHotel,
-          placeIds: selectedPlaces
-        })
-      });
+      await apiRequest("/admin/mappings", "POST", {
+        hotelId: selectedHotel,
+        placeIds: selectedPlaces
+      }, token);
 
-      if (response.ok) {
-        alert("Mapping saved successfully!");
-        // Reload mappings
-        const mappingsRes = await fetch(`${API_URL}/api/admin/mappings`, {
-          headers: { "Authorization": `Bearer ${token}` }
-        });
-        if (mappingsRes.ok) {
-          const data = await mappingsRes.json();
-          setExistingMappings(data.data?.mappings || []);
-        }
-        
-        // Reset selection
-        setSelectedPlaces([]);
-      } else {
-        alert("Error saving mapping");
-      }
+      alert("Mapping saved successfully!");
+      // Reload mappings
+      const mappingsData = await apiRequest("/admin/mappings", "GET", null, token);
+      setExistingMappings(mappingsData.data?.mappings || []);
+      
+      // Reset selection
+      setSelectedPlaces([]);
     } catch (error) {
       console.error("Error saving mapping:", error);
       alert("Failed to save mapping");
@@ -217,21 +178,13 @@ const AdminMapping = () => {
 
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/mappings/${hotelId}/${placeId}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/mappings/${hotelId}/${placeId}`, "DELETE", null, token);
 
-      if (response.ok) {
-        // Update local state
-        setExistingMappings(prev => 
-          prev.filter(m => !(m.hotelId === hotelId && m.placeId === placeId))
-        );
-        alert("Mapping removed!");
-      }
+      // Update local state
+      setExistingMappings(prev => 
+        prev.filter(m => !(m.hotelId === hotelId && m.placeId === placeId))
+      );
+      alert("Mapping removed!");
     } catch (error) {
       console.error("Error removing mapping:", error);
       alert("Failed to remove mapping");
@@ -242,18 +195,8 @@ const AdminMapping = () => {
   const saveFallbackRules = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/mappings/rules`, {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(fallbackRules)
-      });
-
-      if (response.ok) {
-        alert("Fallback rules saved successfully!");
-      }
+      await apiRequest("/admin/mappings/rules", "PUT", fallbackRules, token);
+      alert("Fallback rules saved successfully!");
     } catch (error) {
       console.error("Error saving rules:", error);
       alert("Failed to save rules");
@@ -269,26 +212,17 @@ const AdminMapping = () => {
 
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/mappings/bulk/city`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          city: selectedBulkCity,
-          hotelIds: selectedBulkHotels,
-          distance: bulkDistance
-        })
-      });
+      await apiRequest("/admin/mappings/bulk/city", "POST", {
+        city: selectedBulkCity,
+        hotelIds: selectedBulkHotels,
+        distance: bulkDistance
+      }, token);
 
-      if (response.ok) {
-        alert("Bulk mapping completed!");
-        // Reload data
-        loadAllData();
-        // Reset selection
-        setSelectedBulkHotels([]);
-      }
+      alert("Bulk mapping completed!");
+      // Reload data
+      loadAllData();
+      // Reset selection
+      setSelectedBulkHotels([]);
     } catch (error) {
       console.error("Error bulk mapping:", error);
       alert("Failed to bulk map");
@@ -304,23 +238,14 @@ const AdminMapping = () => {
 
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/mappings/bulk/hotel`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          hotelId: selectedBulkHotel,
-          city: selectedBulkCity,
-          distance: bulkDistance
-        })
-      });
+      await apiRequest("/admin/mappings/bulk/hotel", "POST", {
+        hotelId: selectedBulkHotel,
+        city: selectedBulkCity,
+        distance: bulkDistance
+      }, token);
 
-      if (response.ok) {
-        alert("Hotel mapped to all places in city!");
-        loadAllData();
-      }
+      alert("Hotel mapped to all places in city!");
+      loadAllData();
     } catch (error) {
       console.error("Error bulk mapping:", error);
       alert("Failed to bulk map");

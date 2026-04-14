@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { apiRequest } from "../services/api";
 import "./Login.css";
-import { useAuth } from "../context/AuthContext"; // ADD THIS
 
-// API Base URL
-const API_BASE = "http://localhost:5000/api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -55,40 +54,10 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          email: email.trim(), 
-          password 
-        }),
+      const data = await apiRequest("/auth/login", "POST", { 
+        email: email.trim(), 
+        password 
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          if (data.message && data.message.includes('No account found')) {
-            throw new Error(`${data.message} <a href="/register" style="color: #4CAF50; text-decoration: underline;">Create an account</a>`);
-          } else {
-            throw new Error(data.message);
-          }
-        } else if (response.status === 403) {
-          throw new Error("Acount is deactivated. Please contact support.");
-        } else if (response.status === 422) {
-          const backendErrors = data.errors || {};
-          const formattedErrors = {};
-          Object.keys(backendErrors).forEach(key => {
-            formattedErrors[key] = backendErrors[key].msg || backendErrors[key];
-          });
-          setFieldErrors(formattedErrors);
-          throw new Error(data.message || "Validation failed");
-        } else {
-          throw new Error(data.message || `Login failed (${response.status})`);
-        }
-      }
 
       // Login successful
       const welcomeMessage = data.user?.fullname 
@@ -122,9 +91,23 @@ const Login = () => {
       }, 2000);
 
     } catch (error) {
-      console.error("Login error:", error);
-      
-      if (error.name === 'TypeError' || error.message.includes('Failed to fetch')) {
+      if (error.status === 401) {
+        if (error.data?.message && error.data.message.includes('No account found')) {
+          setErrorMessage(`${error.data.message} <a href="/register" style="color: #4CAF50; text-decoration: underline;">Create an account</a>`);
+        } else {
+          setErrorMessage(error.message);
+        }
+      } else if (error.status === 403) {
+        setErrorMessage("Account is deactivated. Please contact support.");
+      } else if (error.status === 422) {
+        const backendErrors = error.data?.errors || {};
+        const formattedErrors = {};
+        Object.keys(backendErrors).forEach(key => {
+          formattedErrors[key] = backendErrors[key].msg || backendErrors[key];
+        });
+        setFieldErrors(formattedErrors);
+        setErrorMessage(error.message || "Validation failed");
+      } else if (error.name === 'TypeError' || error.message.includes('Failed to fetch')) {
         setErrorMessage("Network error. Please check your connection and try again.");
       } else {
         setErrorMessage(error.message || "Login failed. Please try again.");

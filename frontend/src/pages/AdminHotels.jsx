@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./AdminHotels.css";
 
 const AdminHotels = () => {
@@ -17,7 +18,6 @@ const AdminHotels = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [viewMode, setViewMode] = useState("grid"); // grid or list
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   // Check authentication
   useEffect(() => {
@@ -36,18 +36,10 @@ const AdminHotels = () => {
   const fetchHotels = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/hotels`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest("/admin/hotels", "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setHotels(data.data?.hotels || []);
-        setFilteredHotels(data.data?.hotels || []);
-      }
+      setHotels(data.data?.hotels || []);
+      setFilteredHotels(data.data?.hotels || []);
     } catch (error) {
       console.error("Error fetching hotels:", error);
     } finally {
@@ -58,17 +50,9 @@ const AdminHotels = () => {
   const fetchCities = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/locations/cities`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest("/admin/locations/cities", "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setCities(data.data?.cities || []);
-      }
+      setCities(data.data?.cities || []);
     } catch (error) {
       console.error("Error fetching cities:", error);
     }
@@ -142,19 +126,11 @@ const AdminHotels = () => {
   const confirmDelete = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/hotels/${hotelToDelete._id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/hotels/${hotelToDelete._id}`, "DELETE", null, token);
 
-      if (response.ok) {
-        setHotels(hotels.filter(h => h._id !== hotelToDelete._id));
-        setShowDeleteModal(false);
-        setHotelToDelete(null);
-      }
+      setHotels(hotels.filter(h => h._id !== hotelToDelete._id));
+      setShowDeleteModal(false);
+      setHotelToDelete(null);
     } catch (error) {
       console.error("Error deleting hotel:", error);
     }
@@ -163,19 +139,11 @@ const AdminHotels = () => {
   const toggleStatus = async (hotel) => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/hotels/${hotel._id}/toggle-status`, {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/hotels/${hotel._id}/toggle-status`, "PUT", null, token);
 
-      if (response.ok) {
-        setHotels(hotels.map(h => 
-          h._id === hotel._id ? { ...h, isActive: !h.isActive } : h
-        ));
-      }
+      setHotels(hotels.map(h => 
+        h._id === hotel._id ? { ...h, isActive: !h.isActive } : h
+      ));
     } catch (error) {
       console.error("Error toggling status:", error);
     }
@@ -184,19 +152,11 @@ const AdminHotels = () => {
   const toggleFeatured = async (hotel) => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/hotels/${hotel._id}/toggle-featured`, {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/hotels/${hotel._id}/toggle-featured`, "PUT", null, token);
 
-      if (response.ok) {
-        setHotels(hotels.map(h => 
-          h._id === hotel._id ? { ...h, isFeatured: !h.isFeatured } : h
-        ));
-      }
+      setHotels(hotels.map(h => 
+        h._id === hotel._id ? { ...h, isFeatured: !h.isFeatured } : h
+      ));
     } catch (error) {
       console.error("Error toggling featured status:", error);
     }

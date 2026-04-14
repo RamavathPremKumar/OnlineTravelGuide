@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import axios from "axios";
+import { apiRequest } from "../services/api";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -120,13 +120,12 @@ const Navbar = () => {
 
       setIsLoadingSuggestions(true);
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/search/suggestions?q=${encodeURIComponent(query)}`,
-          { timeout: 2000 }
+        const data = await apiRequest(
+          `/search/suggestions?q=${encodeURIComponent(query)}`
         );
         
-        if (response.data.success) {
-          setSearchSuggestions(response.data.suggestions || []);
+        if (data.success) {
+          setSearchSuggestions(data.suggestions || []);
           setShowSuggestions(true);
         } else {
           setSearchSuggestions([]);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./ForgotPassword.css"; // Using same CSS file
 
 const AdminForgotPassword = () => {
@@ -9,7 +10,6 @@ const AdminForgotPassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,37 +29,10 @@ const AdminForgotPassword = () => {
     setSuccessMessage("");
 
     try {
-      // Note: Change the endpoint from /api/auth/forgot-password to /api/admin/forgot-password
-      const response = await fetch(`${API_BASE}/api/admin/forgot-password`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email.trim() }),
+      const data = await apiRequest("/admin/forgot-password", "POST", { 
+        email: email.trim() 
       });
 
-      const data = await response.json();
-      
-      // Email not registered (404)
-      if (response.status === 404) {
-        setErrorMessage(
-          <div>
-            <strong>Admin email not found!</strong><br />
-            This email is not registered as an admin. Please check your email or{" "}
-            <Link to="/AdminRegistration" style={{color: "#3498db", fontWeight: "bold"}}>
-              register as an admin
-            </Link>.
-          </div>
-        );
-        setLoading(false);
-        return;
-      }
-      
-      // Other errors (400, 500, etc.)
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to send password reset link");
-      }
-      
       // Success (200 or 201)
       setSuccessMessage(data.message || "Password reset link has been sent to your admin email!");
       setEmail("");
@@ -71,7 +44,21 @@ const AdminForgotPassword = () => {
 
     } catch (error) {
       console.error("Admin forgot password error:", error);
-      setErrorMessage(error.message || "Failed to process request. Please try again.");
+      
+      // Email not registered (404)
+      if (error.status === 404) {
+        setErrorMessage(
+          <div>
+            <strong>Admin email not found!</strong><br />
+            This email is not registered as an admin. Please check your email or{" "}
+            <Link to="/AdminRegistration" style={{color: "#3498db", fontWeight: "bold"}}>
+              register as an admin
+            </Link>.
+          </div>
+        );
+      } else {
+        setErrorMessage(error.message || "Failed to process request. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

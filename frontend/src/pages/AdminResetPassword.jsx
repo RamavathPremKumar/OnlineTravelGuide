@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./ResetPassword.css";
 
 const AdminResetPassword = () => {
@@ -15,7 +16,6 @@ const AdminResetPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     // Get token from URL path parameter
@@ -65,21 +65,9 @@ const AdminResetPassword = () => {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`${API_BASE}/api/admin/reset-password/${token}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          password: newPassword 
-        }),
+      await apiRequest(`/admin/reset-password/${token}`, "POST", { 
+        password: newPassword 
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to reset password");
-      }
 
       setSuccessMessage("Password reset successful! Redirecting to admin login...");
 

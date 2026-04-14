@@ -1,12 +1,22 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+import { API_BASE_URL } from '../config/api';
 
 // Generic API request function
 export const apiRequest = async (endpoint, method = 'GET', data = null, token = null) => {
-  const url = `${API_BASE_URL}${endpoint}`;
+  let url = `${API_BASE_URL}${endpoint}`;
   
-  const headers = {
-    'Content-Type': 'application/json',
-  };
+  if (method === 'GET' && data && typeof data === 'object') {
+    const params = new URLSearchParams(data).toString();
+    if (params) {
+      url += (url.includes('?') ? '&' : '?') + params;
+    }
+  }
+  
+  const isFormData = data instanceof FormData;
+  
+  const headers = {};
+  if (!isFormData) {
+    headers['Content-Type'] = 'application/json';
+  }
   
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
@@ -18,7 +28,7 @@ export const apiRequest = async (endpoint, method = 'GET', data = null, token = 
   };
   
   if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
-    config.body = JSON.stringify(data);
+    config.body = isFormData ? data : JSON.stringify(data);
   }
   
   try {
@@ -26,7 +36,10 @@ export const apiRequest = async (endpoint, method = 'GET', data = null, token = 
     const result = await response.json();
     
     if (!response.ok) {
-      throw new Error(result.message || 'Something went wrong');
+      const error = new Error(result.message || 'Something went wrong');
+      error.status = response.status;
+      error.data = result;
+      throw error;
     }
     
     return result;

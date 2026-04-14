@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import "./Feedback.css";
 import { useLocation } from "react-router-dom";
+import { apiRequest } from "../services/api";
 
 const Feedback = () => {
   const { user, isAuthenticated } = useAuth();
@@ -35,12 +36,7 @@ const Feedback = () => {
       if (isAuthenticated && user) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch('http://localhost:5000/api/bookings/my-bookings/with-actual-status?autoUpdate=true', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          const data = await response.json();
+          const data = await apiRequest('/bookings/my-bookings/with-actual-status?autoUpdate=true', 'GET', null, token);
           if (data.success) {
             // Filter only completed bookings where checkout date has passed
             const now = new Date();
@@ -97,11 +93,7 @@ useEffect(() => {
     const fetchReviews = async () => {
       try {
         setFetchError(null);
-        const response = await fetch('http://localhost:5000/api/feedback');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await apiRequest('/feedback');
         
         console.log('Feedback API Response:', data);
         
@@ -236,15 +228,7 @@ useEffect(() => {
       console.log('Sending feedback data:', dataToSend);
 
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/feedback', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData
-      });
-
-      const data = await response.json();
+      const data = await apiRequest('/feedback', 'POST', formData, token);
 
       if (!response.ok) {
         throw new Error(data.message || 'Failed to submit feedback');
@@ -273,8 +257,7 @@ useEffect(() => {
         setUploadedPhotos([]);
         
         // Refresh reviews after submission
-        const refreshResponse = await fetch('http://localhost:5000/api/feedback');
-        const refreshData = await refreshResponse.json();
+        const refreshData = await apiRequest('/feedback');
         
         if (refreshData.success) {
           if (refreshData.docs) {
@@ -323,16 +306,7 @@ useEffect(() => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/feedback/${reviewId}/vote`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ isHelpful })
-      });
-      
-      const data = await response.json();
+      const data = await apiRequest(`/feedback/${reviewId}/vote`, 'POST', { isHelpful }, token);
       if (data.success) {
         setAllReviews(prev => prev.map(review => 
           review._id === reviewId 
@@ -426,7 +400,7 @@ useEffect(() => {
                     {review.photos.slice(0, 3).map((photo, index) => (
                       <img 
                         key={index} 
-                        src={photo.startsWith('http') ? photo : `http://localhost:5000${photo}`} 
+                        src={photo.startsWith('http') ? photo : `${API_BASE_URL.replace('/api', '')}${photo}`} 
                         alt={`Review ${index + 1}`} 
                         className="review-photo" 
                       />

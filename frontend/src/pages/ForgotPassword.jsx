@@ -1,8 +1,4 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./ForgotPassword.css";
-
-const API_BASE = "http://localhost:5000/api";
+import { apiRequest } from "../services/api";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -29,35 +25,7 @@ const ForgotPassword = () => {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`${API_BASE}/auth/forgot-password`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email.trim() }),
-      });
-
-      const data = await response.json();
-      
-      // Email not registered (404)
-      if (response.status === 404) {
-        setErrorMessage(
-          <div>
-            <strong>Email not found!</strong><br />
-            This email is not registered. Please check your email or{" "}
-            <Link to="/register" style={{color: "#3498db", fontWeight: "bold"}}>
-              register for an account
-            </Link>.
-          </div>
-        );
-        setLoading(false);
-        return;
-      }
-      
-      // Other errors (400, 500, etc.)
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to send reset link");
-      }
+      const data = await apiRequest("/auth/forgot-password", "POST", { email: email.trim() });
       
       // Success (200 or 201)
       setSuccessMessage(data.message || "Password reset link has been sent to your email!");
@@ -69,8 +37,19 @@ const ForgotPassword = () => {
       }, 3000);
 
     } catch (error) {
-      console.error("Forgot password error:", error);
-      setErrorMessage(error.message || "Failed to process request. Please try again.");
+      if (error.status === 404) {
+        setErrorMessage(
+          <div>
+            <strong>Email not found!</strong><br />
+            This email is not registered. Please check your email or{" "}
+            <Link to="/register" style={{color: "#3498db", fontWeight: "bold"}}>
+              register for an account
+            </Link>.
+          </div>
+        );
+      } else {
+        setErrorMessage(error.message || "Failed to process request. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

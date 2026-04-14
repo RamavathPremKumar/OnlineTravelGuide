@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./Admin.css";
 
 const Admin = () => {
@@ -17,7 +18,6 @@ const Admin = () => {
   const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true); // Add loading state for auth check
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -73,40 +73,28 @@ const Admin = () => {
       
       try {
         // Verify token with backend
-        const response = await fetch(`${API_URL}/api/admin/profile`, {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        });
+        const data = await apiRequest("/admin/profile", "GET", null, token);
         
-        if (response.ok) {
-          const data = await response.json();
-          const admin = JSON.parse(adminData);
-          setSuccessMessage(`Welcome back, ${admin.adminName}! Redirecting to dashboard...`);
-          
-          setTimeout(() => {
-            navigate("/admin/dashboard");
-          }, 1500);
-        } else {
-          // Token invalid, clear storage
-          console.log('Token invalid on server, clearing storage');
-          localStorage.removeItem("adminToken");
-          localStorage.removeItem("adminData");
-          setErrorMessage("Session expired. Please login again.");
-        }
+        const admin = JSON.parse(adminData);
+        setSuccessMessage(`Welcome back, ${admin.adminName}! Redirecting to dashboard...`);
+        
+        setTimeout(() => {
+          navigate("/admin/dashboard");
+        }, 1500);
       } catch (error) {
         console.error("Error checking auth status:", error);
         localStorage.removeItem("adminToken");
         localStorage.removeItem("adminData");
+        if (error.status === 401) {
+          setErrorMessage("Session expired. Please login again.");
+        }
       } finally {
         setCheckingAuth(false);
       }
     };
     
     checkAuthStatus();
-  }, [navigate, API_URL]);
+  }, [navigate]);
 
   const validateForm = () => {
     if (!formData.email.trim()) {
@@ -144,28 +132,15 @@ const Admin = () => {
     setIsLoading(true);
 
     try {
-      console.log("Attempting login for:", formData.email);
-      
-      const response = await fetch(`${API_URL}/api/admin/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password
-        }),
+      const data = await apiRequest("/admin/login", "POST", {
+        email: formData.email,
+        password: formData.password
       });
-
-      const data = await response.json();
       
-      console.log("Login API Response:", data);
-
-      if (response.ok) {
-        // Login successful
-        setSuccessMessage(data.message || "✅ Login successful!");
-        setErrorMessage("");
-        setShowRegistrationPrompt(false);
+      // Login successful
+      setSuccessMessage(data.message || "✅ Login successful!");
+      setErrorMessage("");
+      setShowRegistrationPrompt(false);
         
         // Store token and admin data in localStorage
         if (data.data && data.data.token) {
@@ -185,30 +160,31 @@ const Admin = () => {
             window.location.reload();
           }, 1000);
         }
-      } else {
-        const errorMsg = data.message || "Login failed";
-        
-        // Case 1: No admin account found
-        if (errorMsg.toLowerCase().includes("no admin") || 
-            errorMsg.toLowerCase().includes("not found") ||
-            errorMsg.toLowerCase().includes("register first")) {
-          setErrorMessage("❌ No admin account found with this email.");
-          setShowRegistrationPrompt(true);
-        }
-        // Case 2: Incorrect password
-        else if (errorMsg.toLowerCase().includes("password") || 
-                   errorMsg.toLowerCase().includes("incorrect") ||
-                   errorMsg.toLowerCase().includes("wrong")) {
-          setErrorMessage("❌ Incorrect password. Please try again.");
-          setShowRegistrationPrompt(false);
-        }
-        // Default error
-        else {
-          setErrorMessage(`❌ ${errorMsg}`);
-        }
-      }
     } catch (error) {
       console.error("Login error:", error);
+      
+      const errorMsg = error.message || "Login failed";
+      
+      // Case 1: No admin account found
+      if (error.status === 404 || 
+          errorMsg.toLowerCase().includes("no admin") || 
+          errorMsg.toLowerCase().includes("not found") ||
+          errorMsg.toLowerCase().includes("register first")) {
+        setErrorMessage("❌ No admin account found with this email.");
+        setShowRegistrationPrompt(true);
+      }
+      // Case 2: Incorrect password
+      else if (error.status === 401 || 
+                 errorMsg.toLowerCase().includes("password") || 
+                 errorMsg.toLowerCase().includes("incorrect") ||
+                 errorMsg.toLowerCase().includes("wrong")) {
+        setErrorMessage("❌ Incorrect password. Please try again.");
+        setShowRegistrationPrompt(false);
+      }
+      // Default error
+      else {
+        setErrorMessage(`❌ ${errorMsg}`);
+      }
       
       // Handle network errors
       if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {

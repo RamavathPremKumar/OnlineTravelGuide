@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./Register.css";
-
-const API_BASE = "http://localhost:5000/api";
 
 const Register = () => {
   const [fullname, setFullname] = useState("");
@@ -44,19 +43,7 @@ const Register = () => {
     setErrorMessage("");
     
     try {
-      const response = await fetch(`${API_BASE}/auth/send-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to send OTP");
-      }
+      const data = await apiRequest("/auth/send-otp", "POST", { email });
       
       setIsOtpSent(true);
       setOtpAttempted(false);
@@ -87,19 +74,7 @@ const Register = () => {
     setErrorMessage("");
     
     try {
-      const response = await fetch(`${API_BASE}/auth/verify-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, otp }),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || "Invalid OTP");
-      }
+      const data = await apiRequest("/auth/verify-otp", "POST", { email, otp });
       
       setIsOtpValidated(true);
       setOtpAttempted(true);
@@ -157,19 +132,7 @@ const Register = () => {
         password,
       };
       
-      const response = await fetch(`${API_BASE}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
-      }
+      const data = await apiRequest("/auth/register", "POST", userData);
       
       // Registration successful - Update UI immediately
       setSuccessMessage("🎉 Registration successful! You are now logged in.");

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./AdminPlaceForm.css";
 
 const AdminPlaceForm = () => {
@@ -40,7 +41,6 @@ const AdminPlaceForm = () => {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [mainImageIndex, setMainImageIndex] = useState(0);
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   // Check authentication and load data
   useEffect(() => {
@@ -65,44 +65,36 @@ const AdminPlaceForm = () => {
   const fetchPlaceDetails = async (placeId) => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/places/${placeId}`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest(`/admin/places/${placeId}`, "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        const place = data.data?.place;
-        
-        if (place) {
-          setFormData({
-            name: place.name || "",
-            description: place.description || "",
-            locationId: place.locationId || "",
-            city: place.city || "",
-            country: place.country || "",
-            category: place.category || "",
-            tags: place.tags || [],
-            rating: place.rating || "",
-            openingHours: place.openingHours || "",
-            entryFee: place.entryFee || "",
-            bestTimeToVisit: place.bestTimeToVisit || "",
-            safetyInfo: place.safetyInfo || "",
-            contactInfo: place.contactInfo || "",
-            website: place.website || "",
-            latitude: place.latitude || "",
-            longitude: place.longitude || "",
-            isActive: place.isActive !== false,
-            isFeatured: place.isFeatured || false,
-            source: place.source || "admin"
-          });
+      const place = data.data?.place;
+      
+      if (place) {
+        setFormData({
+          name: place.name || "",
+          description: place.description || "",
+          locationId: place.locationId || "",
+          city: place.city || "",
+          country: place.country || "",
+          category: place.category || "",
+          tags: place.tags || [],
+          rating: place.rating || "",
+          openingHours: place.openingHours || "",
+          entryFee: place.entryFee || "",
+          bestTimeToVisit: place.bestTimeToVisit || "",
+          safetyInfo: place.safetyInfo || "",
+          contactInfo: place.contactInfo || "",
+          website: place.website || "",
+          latitude: place.latitude || "",
+          longitude: place.longitude || "",
+          isActive: place.isActive !== false,
+          isFeatured: place.isFeatured || false,
+          source: place.source || "admin"
+        });
 
-          if (place.images && place.images.length > 0) {
-            setImages(place.images);
-            setImagePreviews(place.images.map(img => img.url || img));
-          }
+        if (place.images && place.images.length > 0) {
+          setImages(place.images);
+          setImagePreviews(place.images.map(img => img.url || img));
         }
       }
     } catch (error) {
@@ -113,17 +105,9 @@ const AdminPlaceForm = () => {
   const fetchLocations = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/locations`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest("/admin/locations", "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setLocations(data.data?.locations || []);
-      }
+      setLocations(data.data?.locations || []);
     } catch (error) {
       console.error("Error fetching locations:", error);
     }
@@ -132,17 +116,9 @@ const AdminPlaceForm = () => {
   const fetchCategories = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/categories`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest("/admin/categories", "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setCategories(data.data?.categories || []);
-      }
+      setCategories(data.data?.categories || []);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -309,29 +285,16 @@ const AdminPlaceForm = () => {
       // Add main image index
       formDataToSend.append('mainImageIndex', mainImageIndex);
 
-      const url = isEditMode 
-        ? `${API_URL}/api/admin/places/${id}`
-        : `${API_URL}/api/admin/places`;
+      const endpoint = isEditMode 
+        ? `/admin/places/${id}`
+        : `/admin/places`;
       
       const method = isEditMode ? "PUT" : "POST";
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          // Don't set Content-Type for FormData, browser will set it with boundary
-        },
-        body: formDataToSend
-      });
+      const data = await apiRequest(endpoint, method, formDataToSend, token);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert(isEditMode ? "Place updated successfully!" : "Place added successfully!");
-        navigate("/admin/places");
-      } else {
-        alert(data.message || `Error: ${response.status}`);
-      }
+      alert(isEditMode ? "Place updated successfully!" : "Place added successfully!");
+      navigate("/admin/places");
     } catch (error) {
       console.error("Error saving place:", error);
       alert("An error occurred while saving. Please try again.");

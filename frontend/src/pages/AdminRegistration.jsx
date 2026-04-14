@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./AdminRegistration.css";
 import { useNavigate } from "react-router-dom";
+import { apiRequest } from "../services/api";
 
 const AdminRegistration = () => {
   const navigate = useNavigate();
@@ -27,7 +28,6 @@ const AdminRegistration = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [emailError, setEmailError] = useState("");
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -70,38 +70,26 @@ const AdminRegistration = () => {
       
       console.log("Sending OTP to:", formData.email);
       
-      const response = await fetch(`${API_URL}/api/admin/send-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: formData.email }),
-      });
+      const data = await apiRequest("/admin/send-otp", "POST", { email: formData.email });
       
-      const data = await response.json();
       console.log("OTP API Response:", data);
       
-      if (response.ok) {
-        setIsOtpSent(true);
-        setOtpAttempted(false);
-        setSuccessMessage(data.message || "✅ OTP sent to your email!");
-        setErrorMessage("");
-        
-        // For development, show OTP in console
-        if (data.data && data.data.otp) {
-          console.log("📧 OTP for testing:", data.data.otp);
-        }
-      } else {
-        if (data.message.includes("already exists")) {
-          setEmailError(data.message);
-        } else {
-          setErrorMessage(data.message || "Failed to send OTP. Please try again.");
-        }
-        setIsOtpSent(false);
+      setIsOtpSent(true);
+      setOtpAttempted(false);
+      setSuccessMessage(data.message || "✅ OTP sent to your email!");
+      setErrorMessage("");
+      
+      // For development, show OTP in console
+      if (data.data && data.data.otp) {
+        console.log("📧 OTP for testing:", data.data.otp);
       }
     } catch (error) {
       console.error("OTP sending error:", error);
-      setErrorMessage("Network error. Please check your connection.");
+      if (error.message && error.message.includes("already exists")) {
+        setEmailError(error.message);
+      } else {
+        setErrorMessage(error.message || "Failed to send OTP. Please try again.");
+      }
       setIsOtpSent(false);
     } finally {
       setOtpLoading(false);
@@ -123,37 +111,23 @@ const AdminRegistration = () => {
       setOtpLoading(true);
       setErrorMessage("");
       
-      const response = await fetch(`${API_URL}/api/admin/verify-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          email: formData.email,
-          otp: otp 
-        }),
+      const data = await apiRequest("/admin/verify-otp", "POST", { 
+        email: formData.email,
+        otp: otp 
       });
       
-      const data = await response.json();
+      setIsOtpValidated(true);
+      setOtpAttempted(true);
+      setSuccessMessage(data.message || "✅ OTP verified successfully!");
+      setErrorMessage("");
       
-      if (response.ok) {
-        setIsOtpValidated(true);
-        setOtpAttempted(true);
-        setSuccessMessage(data.message || "✅ OTP verified successfully!");
-        setErrorMessage("");
-        
-        // Store verification token for registration
-        if (data.data && data.data.verificationToken) {
-          setVerificationToken(data.data.verificationToken);
-        }
-      } else {
-        setIsOtpValidated(false);
-        setOtpAttempted(true);
-        setErrorMessage(data.message || "Invalid OTP. Please try again.");
+      // Store verification token for registration
+      if (data.data && data.data.verificationToken) {
+        setVerificationToken(data.data.verificationToken);
       }
     } catch (error) {
       console.error("OTP validation error:", error);
-      setErrorMessage("Network error. Please try again.");
+      setErrorMessage(error.message || "Invalid OTP. Please try again.");
       setIsOtpValidated(false);
       setOtpAttempted(true);
     } finally {
@@ -202,42 +176,29 @@ const AdminRegistration = () => {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`${API_URL}/api/admin/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          adminName: formData.adminName,
-          email: formData.email,
-          password: formData.password,
-          verificationToken: verificationToken
-        }),
+      const data = await apiRequest("/admin/register", "POST", {
+        adminName: formData.adminName,
+        email: formData.email,
+        password: formData.password,
+        verificationToken: verificationToken
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setSuccessMessage(data.message || "✅ Admin registration successful!");
-        setErrorMessage("");
-        
-        // Store token in localStorage
-        if (data.data && data.data.token) {
-          localStorage.setItem("adminToken", data.data.token);
-          localStorage.setItem("adminData", JSON.stringify(data.data));
-        }
-        
-        // Redirect after 2 seconds
-        setTimeout(() => {
-          navigate("/admin/dashboard");
-        }, 2000);
-      } else {
-        setErrorMessage(data.message || "Registration failed. Please try again.");
-        setSuccessMessage("");
+      setSuccessMessage(data.message || "✅ Admin registration successful!");
+      setErrorMessage("");
+      
+      // Store token in localStorage
+      if (data.data && data.data.token) {
+        localStorage.setItem("adminToken", data.data.token);
+        localStorage.setItem("adminData", JSON.stringify(data.data));
       }
+      
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        navigate("/admin/dashboard");
+      }, 2000);
     } catch (error) {
       console.error("Registration error:", error);
-      setErrorMessage("Network error. Please check your connection.");
+      setErrorMessage(error.message || "Registration failed. Please try again.");
       setSuccessMessage("");
     } finally {
       setIsLoading(false);

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
+import { apiRequest } from "../services/api";
 import "./Accommodations.css";
 
 const AccommodationForm = () => {
@@ -72,9 +73,7 @@ const AccommodationForm = () => {
   const fetchLocations = async () => {
     try {
       console.log('Fetching locations from API...');
-      const response = await fetch('http://localhost:5000/api/hotels/locations');
-      
-      const data = await response.json();
+      const data = await apiRequest('/hotels/locations');
       
       if (data.success) {
         console.log('Setting locations:', data.locations);
@@ -99,8 +98,7 @@ const AccommodationForm = () => {
     
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/hotels/${location}/places`);
-      const data = await response.json();
+      const data = await apiRequest(`/hotels/${location}/places`);
       
       if (data.success) {
         setPlaces(data.places);
@@ -131,8 +129,7 @@ const AccommodationForm = () => {
     
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/hotels/${location}/${place}/hotels`);
-      const data = await response.json();
+      const data = await apiRequest(`/hotels/${location}/${place}/hotels`);
       
       if (data.success && data.hotels.length > 0) {
         setHotels(data.hotels);
@@ -293,20 +290,9 @@ const AccommodationForm = () => {
       userName: user.fullname || user.username,
     };
     
-    const response = await fetch('http://localhost:5000/api/bookings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(bookingData)
-    });
-
-    const result = await response.json();
+    const result = await apiRequest('/bookings', 'POST', bookingData, token);
     
-    if (!response.ok) {
-      throw new Error(result.message || 'Booking failed');
-    }
+    /* apiRequest already checks response.ok and throws if false */
 
     // 2. Show professional success modal
     showSuccessModal(result.bookingId);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./AdminUsers.css";
 
 const AdminUsers = () => {
@@ -18,7 +19,6 @@ const AdminUsers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   // Check authentication and load data
   useEffect(() => {
@@ -36,18 +36,10 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/users`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const data = await apiRequest("/admin/users", "GET", null, token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setUsers(data.data?.users || []);
-        setFilteredUsers(data.data?.users || []);
-      }
+      setUsers(data.data?.users || []);
+      setFilteredUsers(data.data?.users || []);
     } catch (error) {
       console.error("Error fetching users:", error);
     } finally {
@@ -109,20 +101,12 @@ const AdminUsers = () => {
   const confirmDelete = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/users/${userToDelete._id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/users/${userToDelete._id}`, "DELETE", null, token);
 
-      if (response.ok) {
-        setUsers(users.filter(u => u._id !== userToDelete._id));
-        setShowDeleteModal(false);
-        setUserToDelete(null);
-        alert("User deleted successfully!");
-      }
+      setUsers(users.filter(u => u._id !== userToDelete._id));
+      setShowDeleteModal(false);
+      setUserToDelete(null);
+      alert("User deleted successfully!");
     } catch (error) {
       console.error("Error deleting user:", error);
       alert("Failed to delete user");
@@ -132,19 +116,11 @@ const AdminUsers = () => {
   const toggleStatus = async (user) => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/users/${user._id}/toggle-status`, {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/users/${user._id}/toggle-status`, "PUT", null, token);
 
-      if (response.ok) {
-        setUsers(users.map(u => 
-          u._id === user._id ? { ...u, isActive: !u.isActive } : u
-        ));
-      }
+      setUsers(users.map(u => 
+        u._id === user._id ? { ...u, isActive: !u.isActive } : u
+      ));
     } catch (error) {
       console.error("Error toggling user status:", error);
     }
@@ -153,19 +129,11 @@ const AdminUsers = () => {
   const toggleVerification = async (user) => {
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`${API_URL}/api/admin/users/${user._id}/toggle-verification`, {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await apiRequest(`/admin/users/${user._id}/toggle-verification`, "PUT", null, token);
 
-      if (response.ok) {
-        setUsers(users.map(u => 
-          u._id === user._id ? { ...u, isVerified: !u.isVerified } : u
-        ));
-      }
+      setUsers(users.map(u => 
+        u._id === user._id ? { ...u, isVerified: !u.isVerified } : u
+      ));
     } catch (error) {
       console.error("Error toggling verification:", error);
     }

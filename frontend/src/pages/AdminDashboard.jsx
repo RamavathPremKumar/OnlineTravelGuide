@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -19,7 +20,6 @@ const AdminDashboard = () => {
     recentHotels: []
   });
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   // Check authentication
   useEffect(() => {
@@ -54,27 +54,18 @@ const AdminDashboard = () => {
     const fetchDashboardData = async () => {
       try {
         const token = localStorage.getItem("adminToken");
-        
-        const response = await fetch(`${API_URL}/api/admin/dashboard`, {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        });
+        const data = await apiRequest("/admin/dashboard", "GET", null, token);
 
-        if (response.ok) {
-          const data = await response.json();
-          setStats({
-            totalUsers: data.data?.totalUsers || 0,
-            totalLocations: data.data?.totalLocations || 0,
-            totalPlaces: data.data?.totalPlaces || 0,
-            totalHotels: data.data?.totalHotels || 0,
-            pendingApprovals: data.data?.pendingApprovals || 0,
-            recentUsers: data.data?.recentUsers || [],
-            recentPlaces: data.data?.recentPlaces || [],
-            recentHotels: data.data?.recentHotels || []
-          });
-        }
+        setStats({
+          totalUsers: data.data?.totalUsers || 0,
+          totalLocations: data.data?.totalLocations || 0,
+          totalPlaces: data.data?.totalPlaces || 0,
+          totalHotels: data.data?.totalHotels || 0,
+          pendingApprovals: data.data?.pendingApprovals || 0,
+          recentUsers: data.data?.recentUsers || [],
+          recentPlaces: data.data?.recentPlaces || [],
+          recentHotels: data.data?.recentHotels || []
+        });
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       } finally {

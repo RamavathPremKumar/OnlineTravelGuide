@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { apiRequest } from '../services/api';
 import './SearchPage.css';
 
 const SearchPage = () => {
@@ -33,12 +33,12 @@ const SearchPage = () => {
     setError(null);
     
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/search/results?q=${encodeURIComponent(query)}&type=${type}`
+      const data = await apiRequest(
+        `/search/results?q=${encodeURIComponent(query)}&type=${type}`
       );
       
-      if (response.data.success) {
-        setResults(response.data);
+      if (data.success) {
+        setResults(data);
       } else {
         setError('No results found');
       }

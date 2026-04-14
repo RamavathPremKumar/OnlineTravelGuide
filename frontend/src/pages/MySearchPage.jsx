@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { apiRequest } from '../services/api';
 import './MySearchPage.css';
 
 const MySearchPage = () => {
@@ -28,17 +28,17 @@ const MySearchPage = () => {
     setSearchResults(null);
     
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/db/search/comprehensive?q=${encodeURIComponent(query)}`
+      const data = await apiRequest(
+        `/db/search/comprehensive?q=${encodeURIComponent(query)}`
       );
       
-      if (response.data.success) {
+      if (data.success) {
         setSearchResults({
-          query: response.data.query,
-          result: response.data.result,
-          resultType: response.data.resultType,
-          places: response.data.places || [],
-          placesCount: response.data.placesCount || 0
+          query: data.query,
+          result: data.result,
+          resultType: data.resultType,
+          places: data.places || [],
+          placesCount: data.placesCount || 0
         });
       } else {
         setError(`No results found for "${query}"`);

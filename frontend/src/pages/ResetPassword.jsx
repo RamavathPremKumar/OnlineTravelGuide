@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { apiRequest } from "../services/api";
 import "./ResetPassword.css";
-
-const API_BASE = "http://localhost:5000/api";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -56,22 +55,10 @@ const ResetPassword = () => {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`${API_BASE}/auth/reset-password`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          token,
-          newPassword 
-        }),
+      const data = await apiRequest("/auth/reset-password", "POST", { 
+        token,
+        newPassword 
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to reset password");
-      }
 
       setSuccessMessage("Password reset successful! Redirecting to login...");
       
