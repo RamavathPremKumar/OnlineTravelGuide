@@ -12,7 +12,7 @@ A sophisticated travel destination discovery and hotel booking platform that ena
 
 ### Destination Discovery
 - Multi-source search using Nominatim and Overpass API (OpenStreetMap).
-- **Voice-Enabled Search**: Integrated voice recognition for hands-free destination and hotel discovery.
+- Voice-Enabled Search: Integrated voice recognition for hands-free destination and hotel discovery.
 - Detailed place descriptions fetched via Wikipedia API.
 - Search by landmarks, cities, or specific categories (hotels, resorts, attractions).
 - Dynamic location suggestions and auto-complete functionality.
@@ -33,54 +33,62 @@ A sophisticated travel destination discovery and hotel booking platform that ena
 
 ## Screenshots
 
-### Main Dashboard:
-<img width="1908" height="863" alt="dashboard" src="https://github.com/user-attachments/assets/2f16371c-50d7-49bd-917a-fefb900e5760" />
+### Home Page
+![Home Page](./screenshots/homepage.png)
 
-### Destination Search:
-<img width="1919" height="875" alt="search" src="https://github.com/user-attachments/assets/8ad5f841-4ce5-4a42-8926-dac74078c71b" />
+### Login Page
+![Login Page](./screenshots/login.png)
 
-### Booking Management:
-<img width="1916" height="880" alt="booking" src="https://github.com/user-attachments/assets/ead4a24d-6e66-4827-bc9c-152d51c47f8f" />
+### Accommodation Page
+![Accommodation Page](./screenshots/accommodation.png)
 
-### User Reviews:
-<img width="1919" height="875" alt="reviews" src="https://github.com/user-attachments/assets/6890841d-74be-43fc-9201-8869a5d909fe" />
+### Search Page
+![Search Page](./screenshots/search.png)
+
+### Gallery Page
+![Gallery Page](./screenshots/gallery.png)
+
+### Feedback Page
+![Feedback Page](./screenshots/feedback.png)
+
+### My Bookings Page
+![My Bookings Page](./screenshots/mybookings.png)
 
 ---
 
 ## Technology Used
 
 ### Frontend
-- **React 18+** – Modern UI library
-- **React Router** – Client-side routing
-- **Context API** – State management
-- **Tailwind CSS** – Aesthetic styling and utility-first layouts
-- **Lucide React** – Professional iconography
-- **React Speech Recognition** – Voice-to-text integration for search query input.
-
+- React 18+ – Modern UI library
+- React Router – Client-side routing
+- Context API – State management
+- Tailwind CSS – Aesthetic styling and utility-first layouts
+- Lucide React – Professional iconography
+- React Speech Recognition – Voice-to-text integration for search query input.
 
 ### Backend
-- **Node.js** – JavaScript runtime
-- **Express.js** – Robust web framework
-- **MongoDB** – NoSQL database with Mongoose ODM
-- **JWT** – Secure token-based authentication
-- **Node-cron** – Automated scheduling for feedback emails
+- Node.js – JavaScript runtime
+- Express.js – Robust web framework
+- MongoDB – NoSQL database with Mongoose ODM
+- JWT – Secure token-based authentication
+- Node-cron – Automated scheduling for feedback emails
 
 ### External APIs & Services
-- **Wikipedia API** – Integration for destination summaries and historical data.
-- **OSRM (Open Source Routing Machine)** – Backend routing engine for calculating stay distances and paths.
-- **Nominatim** – Geocoding and reverse geocoding service.
-- **Overpass API** – Advanced spatial data queries for nearby hotels and attractions.
-- **Nodemailer** – Automated transactional email service.
-- **Multer** – Middleware for handling multi-part/form-data for review photos.
+- Wikipedia API – Integration for destination summaries and historical data.
+- OSRM (Open Source Routing Machine) – Backend routing engine for calculating stay distances and paths.
+- Nominatim – Geocoding and reverse geocoding service.
+- Overpass API – Advanced spatial data queries for nearby hotels and attractions.
+- Nodemailer – Automated transactional email service.
+- Multer – Middleware for handling multi-part/form-data for review photos.
 
 ---
 
 ## Prerequisites
 
-- **Node.js v18+**
-- **MongoDB** (Local instance or MongoDB Atlas)
-- **Git**
-- **SMTP credentials** (e.g., Gmail App Passwords) for automated emails
+- Node.js v18+
+- MongoDB (Local instance or MongoDB Atlas)
+- Git
+- SMTP credentials (e.g., Gmail App Passwords) for automated emails
 
 ---
 
@@ -113,21 +121,21 @@ Online-Travel-Guide/
 
 ## Installation & Setup
 
-### 1️⃣ Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Nanduvasanthi/Online-Travel-Guide.git
 cd Online-Travel-Guide
 ```
 
-### 2️⃣ Backend Setup
+### 2. Backend Setup
 
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file in the backend directory:
+Create a .env file in the backend directory:
 
 ```bash
 PORT=5000
@@ -149,14 +157,14 @@ Start the backend server:
 npm run dev
 ```
 
-### 3️⃣ Frontend Setup
+### 3. Frontend Setup
 
 ```bash
 cd ../frontend
 npm install
 ```
 
-Create a `.env` file in the frontend directory:
+Create a .env file in the frontend directory:
 
 ```bash
 VITE_API_BASE_URL=http://localhost:5000/api
@@ -172,7 +180,7 @@ npm run dev
 
 ## Troubleshooting
 
-- **Database Connection**: Ensure your IP address is whitelisted in MongoDB Atlas if using a cloud database.
-- **Email Dispatch**: If emails are not sending, verify that the SMTP credentials are correct and that "Less Secure Apps" access or "App Passwords" are enabled.
-- **Image Uploads**: Ensure the `backend/uploads` directory exists and has write permissions for review photo storage.
-- **Nominatim Rate Limits**: The search uses OpenStreetMap services; frequent requests may be throttled. The application includes a 500ms delay between requests to mitigate this.
+- Database Connection: Ensure your IP address is whitelisted in MongoDB Atlas if using a cloud database.
+- Email Dispatch: If emails are not sending, verify that the SMTP credentials are correct and that "Less Secure Apps" access or "App Passwords" are enabled.
+- Image Uploads: Ensure the backend/uploads directory exists and has write permissions for review photo storage.
+- Nominatim Rate Limits: The search uses OpenStreetMap services; frequent requests may be throttled. The application includes a 500ms delay between requests to mitigate this.
