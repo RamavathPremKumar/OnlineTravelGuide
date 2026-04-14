@@ -1,4 +1,4 @@
-# Travel Booking & Feedback System
+# Online Travel Guide
 
 A sophisticated travel destination discovery and hotel booking platform that enables users to explore locations, book accommodations, and share verified feedback using advanced mapping and data analysis services.
 
@@ -34,25 +34,25 @@ A sophisticated travel destination discovery and hotel booking platform that ena
 ## Screenshots
 
 ### Home Page
-![Home Page](./screenshots/homepage.png)
+(./screenshots/home.png)
 
 ### Login Page
-![Login Page](./screenshots/login.png)
+(./screenshots/login.png)
 
 ### Accommodation Page
-![Accommodation Page](./screenshots/accommodation.png)
+(./screenshots/accommodation.png)
 
 ### Search Page
-![Search Page](./screenshots/search.png)
+(./screenshots/search.png)
 
 ### Gallery Page
-![Gallery Page](./screenshots/gallery.png)
+(./screenshots/gallery.png)
 
 ### Feedback Page
-![Feedback Page](./screenshots/feedback.png)
+(./screenshots/feedback.png)
 
 ### My Bookings Page
-![My Bookings Page](./screenshots/mybookings.png)
+(./screenshots/mybookings.png)
 
 ---
 
