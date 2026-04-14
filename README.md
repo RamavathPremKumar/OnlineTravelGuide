@@ -34,7 +34,7 @@ A sophisticated travel destination discovery and hotel booking platform that ena
 ## Screenshots
 
 ### Home Page
-![Home Page](./screenshots/homepage.png)
+![Home Page](./screenshots/home.png)
 
 
 ### Login Page
