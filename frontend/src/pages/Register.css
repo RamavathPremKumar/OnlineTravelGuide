@@ -1,0 +1,385 @@
+/* ==================== Registration Container ==================== */
+.registration-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 50px auto;
+  margin-top: 0px;
+}
+
+/* ==================== Form Title ==================== */
+.registration-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* ==================== Form Groups ==================== */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* ==================== Inputs ==================== */
+.form-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* ==================== Eye icon for password ==================== */
+.eye-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* ==================== OTP Inputs & Buttons ==================== */
+.otp-input {
+  width: calc(70% - 10px);
+  display: inline-block;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.send-otp-button, .validate-otp-button {
+  width: calc(30% - 10px);
+  padding: 10px;
+  background-color: rgb(13, 183, 13);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.send-otp-button:hover, .validate-otp-button:hover {
+  background-color: rgb(10, 150, 10);
+}
+
+/* ==================== Submit Button ==================== */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #19ba21;
+}
+
+/* ==================== Error / Success Messages ==================== */
+.error-message {
+  font-size: 0.9rem;
+  color: red;
+}
+
+/* ==================== Register Link ==================== */
+.register-link {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 1.1rem;
+}
+
+.register-link a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* ==================== Footer Styling ==================== */
+footer {
+  background-color: #343a40;
+  color: white;
+  padding: 2px;
+  text-align: center;
+}
+
+footer a {
+  color: #11d038ac;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #f8f9fa;
+}
+
+footer p {
+  margin: 0;
+}
+
+.footer-icons a {
+  color: white;
+  margin: 0 10px;
+  font-size: 1rem;
+}
+
+.footer-icons a:hover {
+  color: #11d038ac;
+}
+
+/* ==================== Contact Info ==================== */
+.contact-info {
+  text-align: left; 
+  margin-top: 10px; 
+}
+
+.contact-title {
+  padding: 0 25%;
+  border-bottom: 2px solid; 
+  margin-bottom: 10px; 
+}
+
+/* ==================== Professional Terms Checkbox ==================== */
+.terms-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  user-select: none;
+}
+
+.terms-checkbox-label input[type="checkbox"] {
+  display: none; /* hide default checkbox */
+}
+
+.terms-custom-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.terms-custom-checkbox::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  top: 1px;
+  left: 5px;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.terms-checkbox-label input[type="checkbox"]:checked + .terms-custom-checkbox {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.terms-checkbox-label input[type="checkbox"]:checked + .terms-custom-checkbox::after {
+  opacity: 1;
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+  .registration-container {
+    width: 90%;
+    padding: 25px;
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .registration-title {
+    font-size: 1.8rem;
+  }
+
+  .submit-button {
+    font-size: 16px;
+  }
+}
+
+
+/* ==================== Error Messages ==================== */
+.alert-error {
+  background-color: #fee;
+  color: #c00;
+  border: 2px solid #fcc;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+.alert-error i {
+  color: #c00;
+  margin-right: 8px;
+}
+
+.alert-success {
+  background-color: #efe;
+  color: #090;
+  border: 2px solid #cfc;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+.alert-success i {
+  color: #090;
+  margin-right: 8px;
+}
+
+.redirect-note {
+  margin-top: 5px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* ==================== Password Toggle Button ==================== */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #7f8c8d;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.3s ease;
+}
+
+
+
+.password-toggle-btn:hover:not(:disabled) {
+  color: #7f8c8d;
+}
+
+.password-toggle-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggle-text {
+  font-size: 13px;
+}
+
+/* Remove old eye-icon */
+.eye-icon {
+  display: none;
+}
+
+/* ==================== Password Match Indicator ==================== */
+.password-match {
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.password-match.match {
+  background-color: #efe;
+  color: #090;
+  border: 1px solid #cfc;
+}
+
+.password-match.no-match {
+  background-color: #fee;
+  color: #c00;
+  border: 1px solid #fcc;
+}
+
+.password-match i {
+  font-size: 16px;
+}
+
+/* ==================== OTP Hint ==================== */
+.otp-hint {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #666;
+  text-align: left;
+}
+
+.password-hint {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #666;
+  text-align: left;
+}
+
+/* ==================== Button States ==================== */
+.send-otp-button:disabled,
+.validate-otp-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ==================== Animation ==================== */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+  .password-toggle-btn .toggle-text {
+    display: none;
+  }
+  
+  .password-toggle-btn {
+    padding: 5px;
+  }
+}
+

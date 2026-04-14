@@ -1,0 +1,656 @@
+/* ==================== PROFILE PAGE ONLY ==================== */
+/* All styles are scoped to .profile-* classes */
+
+/* Main Container */
+.profile-page-container {
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    padding: 20px;
+}
+
+/* Header */
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-top: 20px;
+}
+
+.profile-title {
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.profile-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    border-radius: 2px;
+}
+
+.profile-subtitle {
+    color: #666;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+/* Content */
+.profile-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Cards */
+.profile-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e8e8e8;
+}
+
+/* Card Header */
+.profile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.profile-card-title {
+    color: #2c3e50;
+    font-size: 1.4em;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Profile Buttons */
+.profile-btn-edit,
+.profile-btn-password,
+.profile-btn-save,
+.profile-btn-cancel,
+.profile-btn-delete {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.profile-btn-edit {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.profile-btn-password {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    color: white;
+}
+
+.profile-btn-save {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+}
+
+.profile-btn-cancel {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    color: white;
+}
+
+.profile-btn-delete {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+/* Info Display */
+.profile-info-display {
+    display: grid;
+    gap: 15px;
+}
+
+.profile-info-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.profile-info-label {
+    font-weight: 600;
+    color: #555;
+    min-width: 150px;
+    font-size: 0.95em;
+}
+
+.profile-info-value {
+    color: #333;
+    flex: 1;
+    font-size: 1em;
+}
+
+.profile-verified-badge {
+    background: #2ecc71;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+/* Forms */
+.profile-edit-form,
+.profile-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-form-group {
+    margin-bottom: 5px;
+}
+
+.profile-form-label {
+    font-weight: 600;
+    color: #555;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.profile-form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.profile-form-input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.profile-disabled-input {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+    border-color: #dee2e6;
+}
+
+/* Form Actions */
+.profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* Alerts */
+.profile-alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.profile-alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.profile-alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Loading */
+.profile-loading {
+    text-align: center;
+    padding: 50px;
+}
+
+.profile-loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: profile-spin 1s linear infinite;
+    margin: 0 auto 15px auto;
+}
+
+@keyframes profile-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-page-container {
+        padding: 15px;
+    }
+    
+    .profile-card {
+        padding: 20px;
+    }
+    
+    .profile-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .profile-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .profile-form-actions {
+        flex-direction: column;
+    }
+    
+    .profile-btn-edit,
+    .profile-btn-password,
+    .profile-btn-save,
+    .profile-btn-cancel,
+    .profile-btn-delete {
+        width: 100%;
+    }
+}
+
+/* Delete Account Modal */
+.profile-delete-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: profile-fadeIn 0.3s ease;
+}
+
+.profile-delete-modal {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  animation: profile-scaleIn 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.profile-delete-modal-header {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  padding: 25px;
+  text-align: center;
+}
+
+.profile-delete-icon {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+.profile-delete-modal-header h3 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.profile-delete-modal-body {
+  padding: 25px;
+}
+
+.profile-delete-modal-body p {
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+}
+
+.profile-delete-warnings {
+  background: #fff5f5;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+  border: 1px solid #ffcccc;
+}
+
+.profile-delete-warning-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #721c24;
+  font-size: 0.95em;
+}
+
+.profile-delete-warning-item:last-child {
+  margin-bottom: 0;
+}
+
+.profile-warning-icon {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.profile-delete-confirm-input {
+  margin-top: 25px;
+}
+
+.profile-delete-confirm-input label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
+}
+
+.profile-delete-confirm-input input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.profile-delete-confirm-input input:focus {
+  border-color: #e74c3c;
+  outline: none;
+}
+
+.profile-delete-modal-actions {
+  display: flex;
+  gap: 15px;
+  padding: 20px 25px;
+  border-top: 1px solid #eee;
+}
+
+.profile-delete-cancel-btn {
+  flex: 1;
+  padding: 12px;
+  background: #95a5a6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.profile-delete-confirm-btn {
+  flex: 1;
+  padding: 12px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.profile-delete-confirm-btn:disabled {
+  background: #f5b7b1;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.profile-delete-cancel-btn:hover:not(:disabled) {
+  background: #7f8c8d;
+}
+
+.profile-delete-confirm-btn:hover:not(:disabled) {
+  background: #c0392b;
+}
+
+/* Animations */
+@keyframes profile-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes profile-scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-delete-modal {
+    width: 95%;
+  }
+  
+  .profile-delete-modal-header {
+    padding: 20px;
+  }
+  
+  .profile-delete-modal-body {
+    padding: 20px;
+  }
+  
+  .profile-delete-modal-actions {
+    flex-direction: column;
+  }
+}
+
+/* Font Awesome Icons */
+.profile-btn-edit i,
+.profile-btn-password i,
+.profile-btn-save i,
+.profile-btn-delete i,
+.profile-verified-badge i,
+.profile-security-info i,
+.profile-delete-cancel-btn i,
+.profile-delete-confirm-btn i {
+  margin-right: 8px;
+}
+
+/* Password Input Wrapper - Matching Register Page */
+.profile-password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.profile-password-input-wrapper .profile-form-input {
+  padding-right: 120px;
+  width: 100%;
+}
+
+/* Password Toggle Button - Matching Register Page */
+.profile-password-toggle-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  height: 34px;
+}
+
+.profile-password-toggle-btn:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.profile-password-toggle-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.profile-password-toggle-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Font Awesome Icons in toggle button */
+.profile-password-toggle-btn i {
+  font-size: 14px;
+  width: 16px;
+}
+
+/* Toggle Text */
+.profile-toggle-text {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Password Hint */
+.profile-password-hint {
+  margin-top: 5px;
+  font-size: 0.85em;
+  color: #6c757d;
+}
+
+/* Password Match Indicator */
+.profile-password-match {
+  margin-top: 10px;
+  font-size: 0.85em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.profile-password-match.match {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.profile-password-match.no-match {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Danger Zone Styling */
+.profile-danger-zone {
+  border: 2px solid #e74c3c;
+  background: linear-gradient(to right, #fff 95%, #ffeaea 100%);
+}
+
+.profile-danger-content {
+  text-align: center;
+  padding: 10px;
+}
+
+.profile-danger-content p {
+  color: #721c24;
+  margin-bottom: 20px;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+/* Delete Modal Styling */
+.profile-delete-modal-header .profile-delete-icon i {
+  font-size: 50px;
+  color: #e74c3c;
+}
+
+.profile-delete-warning-item .profile-warning-icon i {
+  color: #e74c3c;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .profile-password-input-wrapper .profile-form-input {
+    padding-right: 100px;
+  }
+  
+  .profile-password-toggle-btn {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+  
+  .profile-toggle-text {
+    display: none;
+  }
+  
+  .profile-password-toggle-btn i {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-password-input-wrapper .profile-form-input {
+    padding-right: 50px;
+  }
+  
+  .profile-password-toggle-btn {
+    padding: 6px;
+    width: 40px;
+    justify-content: center;
+  }
+  
+  .profile-btn-edit,
+  .profile-btn-password,
+  .profile-btn-delete {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+/* Security Info */
+.profile-security-info {
+  color: #666;
+  font-size: 0.95em;
+}
+
+.profile-security-info p {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-security-tip {
+  background: #fff3cd;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 15px;
+  color: #856404;
+  font-size: 0.9em;
+  border-left: 4px solid #ffc107;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

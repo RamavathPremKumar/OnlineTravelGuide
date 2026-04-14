@@ -1,0 +1,489 @@
+/* Full Page Wrapper */
+.registration-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 20px;
+  background-color: #f0f2f5;
+  box-sizing: border-box;
+}
+
+/* Form Container */
+.registration-container {
+  width: 75vw;
+  max-width: 600px;
+  padding: 40px 50px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  box-sizing: border-box;
+}
+
+/* Title */
+.registration-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.registration-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+/* Alerts */
+.alert {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert i {
+  font-size: 16px;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* Labels */
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-label.required::after {
+  content: "*";
+  color: red;
+  margin-left: 2px;
+}
+
+/* Inputs */
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+}
+
+.form-input:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+/* Email + OTP Wrapper */
+.email-otp-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.email-input {
+  flex: 1;
+}
+
+.send-otp-button {
+  padding: 10px 20px;
+  background: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.send-otp-button:hover:not(:disabled) {
+  background: #3a5ce5;
+  transform: translateY(-1px);
+}
+
+.send-otp-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* OTP Group */
+.otp-group {
+  margin-top: 10px;
+}
+
+.otp-input-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.otp-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.otp-input:focus {
+  outline: none;
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+}
+
+.validate-otp-button {
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.validate-otp-button:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.validate-otp-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Password Input Wrapper */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.password-input-wrapper .form-input {
+  flex: 1;
+  padding-right: 100px; /* Space for toggle button */
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.password-toggle-btn:hover:not(:disabled) {
+  color: #4a6cf7;
+  background-color: #f8f9fa;
+}
+
+.password-toggle-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.password-toggle-btn .toggle-text {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.password-toggle-btn i {
+  font-size: 16px;
+}
+
+/* Password Hints */
+.otp-hint,
+.password-hint {
+  margin-top: 5px;
+  color: #666;
+  font-size: 13px;
+}
+
+.password-hint small {
+  color: #666;
+}
+
+/* Password Match Indicator */
+.password-match {
+  margin: 10px 0 20px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.password-match.match {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.password-match.no-match {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.password-match i {
+  font-size: 16px;
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.submit-button {
+  flex: 1;
+  background: linear-gradient(135deg, #4a6cf7, #3a5ce5);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3a5ce5, #2a4cd3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(58, 92, 229, 0.3);
+}
+
+.submit-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.reset-button {
+  flex: 0.5;
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover:not(:disabled) {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.reset-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Login Link */
+.login-link {
+  text-align: center;
+  margin-top: 25px;
+  color: #666;
+  font-size: 15px;
+  width: 100%;
+}
+
+.login-link p {
+  margin: 0;
+}
+
+.login-link-btn {
+  background: none;
+  border: none;
+  color: #4a6cf7;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 600;
+  padding: 0;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.login-link-btn:hover:not(:disabled) {
+  color: #3a5ce5;
+}
+
+.login-link-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Loading spinner */
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #666;
+  font-size: 14px;
+}
+
+footer .footer-icons {
+  margin-top: 15px;
+}
+
+footer .footer-icons a {
+  font-size: 1.2rem;
+  margin: 0 8px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+footer .footer-icons a:hover {
+  color: #4a6cf7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .registration-container {
+    width: 90%;
+    padding: 30px 25px;
+  }
+  
+  .email-otp-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .send-otp-button {
+    width: 100%;
+  }
+  
+  .otp-input-wrapper {
+    flex-direction: column;
+  }
+  
+  .validate-otp-button {
+    width: 100%;
+  }
+  
+  .password-input-wrapper .form-input {
+    padding-right: 90px;
+  }
+}
+
+@media (max-width: 576px) {
+  .registration-container {
+    width: 95%;
+    padding: 25px 20px;
+  }
+  
+  .registration-title {
+    font-size: 24px;
+  }
+  
+  .registration-subtitle {
+    font-size: 14px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .reset-button {
+    flex: 1;
+  }
+  
+  .form-input {
+    padding: 0.65rem 0.9rem;
+  }
+  
+  .password-toggle-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  
+  .password-toggle-btn .toggle-text {
+    font-size: 12px;
+  }
+}
+
+/* Error border for validation */
+.error-border {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}

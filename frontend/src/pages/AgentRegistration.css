@@ -1,0 +1,302 @@
+/* ==================== Full Page Form Wrapper ==================== */
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    background-color: #f0f2f5;
+    box-sizing: border-box;
+}
+
+/* ==================== Form Container ==================== */
+#agent-registration-container {
+    width: 75vw;
+    max-width: 1200px;
+    background-color: #fff;
+    padding: 40px 50px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* ==================== Form Title ==================== */
+#agent-registration-container h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* ==================== Form Groups ==================== */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* ==================== Labels ==================== */
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #444;
+}
+
+.form-label.required::after {
+    content: " *";
+    color: red;
+}
+
+/* ==================== Inputs, Selects, Textareas ==================== */
+.form-control,
+.text-area,
+select {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.text-area {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* ==================== Custom Checkbox ==================== */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #444;
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.checkbox-container:hover input ~ .checkbox-custom {
+    border-color: #007bff;
+}
+
+.checkbox-container input:checked ~ .checkbox-custom {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.checkbox-custom:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkbox-custom:after {
+    display: block;
+}
+
+.checkbox-container .checkbox-custom:after {
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* ==================== Submit Button ==================== */
+#submitBtn {
+    display: block;
+    width: 140px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    margin: 20px auto 0 auto;
+    transition: background-color 0.3s ease;
+}
+
+#submitBtn:hover {
+    background-color: #0056b3;
+}
+
+/* ==================== Footer ==================== */
+footer {
+    display: none;
+}
+
+/* ==================== Responsive ==================== */
+@media screen and (max-width: 768px) {
+    #agent-registration-container {
+        width: 90%;
+        padding: 25px 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #agent-registration-container h2 {
+        font-size: 22px;
+    }
+
+    #submitBtn {
+        width: 120px;
+        padding: 8px 12px;
+    }
+}
+
+
+/* Error states */
+.error-border {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.email-error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.password-mismatch-error {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.submit-button {
+  flex: 1;
+  background: linear-gradient(135deg, #4a6cf7, #3a5ce5);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3a5ce5, #2a4cd3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(58, 92, 229, 0.3);
+}
+
+.submit-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.reset-button {
+  flex: 0.5;
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover:not(:disabled) {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.reset-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Eye icon improvements */
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+  transition: color 0.2s;
+}
+
+.eye-icon:hover {
+  color: #4a6cf7;
+}
+
+/* Form hints */
+.form-hint {
+  color: #6c757d;
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+.demo-hint {
+  color: #fd7e14;
+  font-size: 13px;
+  margin-top: 8px;
+  display: block;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .email-otp-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .send-otp-button {
+    width: 100%;
+  }
+}

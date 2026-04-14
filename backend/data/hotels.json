@@ -1,0 +1,302 @@
+{
+  "goa": {
+    "places": [
+      {
+        "name": "Calangute Beach",
+        "hotels": [
+          {
+            "id": "hotel_goa_001",
+            "name": "Taj Fort Aguada Resort & Spa",
+            "address": "Sinquerim, Bardez, Goa 403515",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Beach Access", "Swimming Pool", "Spa", "Restaurant", "WiFi"],
+            "rating": 4.5,
+            "roomTypes": ["Suite", "Family", "Deluxe"],
+            "contact": "+91-832-6645858"
+          },
+          {
+            "id": "hotel_goa_002",
+            "name": "Alila Diwa Goa",
+            "address": "48/10, Adao Waddo, Majorda, Salcete, Goa 403713",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Pool", "Spa", "Gym", "Restaurant", "Bar"],
+            "rating": 4.3,
+            "roomTypes": ["Deluxe", "Suite", "Villa"],
+            "contact": "+91-832-2746800"
+          },
+          {
+            "id": "hotel_goa_003",
+            "name": "Goa Marriott Resort & Spa",
+            "address": "Miramar, Panaji, Goa 403001",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Swimming Pool", "Spa", "Fitness Center", "Kids Club"],
+            "rating": 4.2,
+            "roomTypes": ["Standard", "Deluxe", "Suite"],
+            "contact": "+91-832-2463333"
+          }
+        ]
+      },
+      {
+        "name": "Baga Beach",
+        "hotels": [
+          {
+            "id": "hotel_goa_004",
+            "name": "Coconut Grove Beach Resort",
+            "address": "Baga Beach Road, Arpora, Goa 403516",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Beach Front", "Pool", "Restaurant", "Bar"],
+            "rating": 4.0,
+            "roomTypes": ["Standard", "Deluxe", "Cottage"],
+            "contact": "+91-832-2276084"
+          },
+          {
+            "id": "hotel_goa_005",
+            "name": "Baga Beach Resort",
+            "address": "Baga Beach, Calangute, Goa 403516",
+            "priceRange": "Low (₹1000-₹3000)",
+            "amenities": ["WiFi", "Restaurant", "Parking"],
+            "rating": 3.8,
+            "roomTypes": ["Standard", "Double"],
+            "contact": "+91-832-2276085"
+          }
+        ]
+      },
+      {
+        "name": "Anjuna Beach",
+        "hotels": [
+          {
+            "id": "hotel_goa_006",
+            "name": "Anjuna Beach Resort",
+            "address": "Anjuna Beach Road, Anjuna, Goa 403509",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Beach View", "Pool", "Restaurant", "Garden"],
+            "rating": 4.1,
+            "roomTypes": ["Cottage", "Deluxe", "Family"],
+            "contact": "+91-832-2274090"
+          }
+        ]
+      },
+      {
+        "name": "Fort Aguada",
+        "hotels": [
+          {
+            "id": "hotel_goa_007",
+            "name": "Fort Aguada Beach Resort",
+            "address": "Sinquerim, Bardez, Goa 403515",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Private Beach", "Multiple Pools", "Spa", "4 Restaurants"],
+            "rating": 4.4,
+            "roomTypes": ["Deluxe", "Suite", "Villa"],
+            "contact": "+91-832-6645858"
+          }
+        ]
+      }
+    ]
+  },
+  "mumbai": {
+    "places": [
+      {
+        "name": "Gateway of India",
+        "hotels": [
+          {
+            "id": "hotel_mumbai_001",
+            "name": "The Taj Mahal Palace",
+            "address": "Apollo Bunder, Mumbai 400001",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Historic Hotel", "Multiple Restaurants", "Pool", "Spa", "Butler Service"],
+            "rating": 4.7,
+            "roomTypes": ["Luxury Suite", "Heritage Room", "Tower Room"],
+            "contact": "+91-22-66653366"
+          },
+          {
+            "id": "hotel_mumbai_002",
+            "name": "The Oberoi Mumbai",
+            "address": "Nariman Point, Mumbai 400021",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Sea View", "Infinity Pool", "Fine Dining", "Luxury Spa"],
+            "rating": 4.6,
+            "roomTypes": ["Premier Room", "Suite", "Luxury Suite"],
+            "contact": "+91-22-66324040"
+          }
+        ]
+      },
+      {
+        "name": "Marine Drive",
+        "hotels": [
+          {
+            "id": "hotel_mumbai_003",
+            "name": "InterContinental Marine Drive Mumbai",
+            "address": "135, Marine Drive, Mumbai 400020",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Sea View", "Fitness Center", "Restaurant", "Business Center"],
+            "rating": 4.2,
+            "roomTypes": ["Deluxe", "Executive", "Suite"],
+            "contact": "+91-22-39879999"
+          },
+          {
+            "id": "hotel_mumbai_004",
+            "name": "Hotel Marine Plaza",
+            "address": "29, Marine Drive, Mumbai 400020",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Sea Facing", "Restaurant", "Conference Room", "WiFi"],
+            "rating": 4.0,
+            "roomTypes": ["Standard", "Deluxe", "Suite"],
+            "contact": "+91-22-22851818"
+          }
+        ]
+      },
+      {
+        "name": "Juhu Beach",
+        "hotels": [
+          {
+            "id": "hotel_mumbai_005",
+            "name": "JW Marriott Mumbai Juhu",
+            "address": "Juhu Tara Road, Juhu, Mumbai 400049",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Beach Access", "Multiple Pools", "6 Restaurants", "Kids Club"],
+            "rating": 4.5,
+            "roomTypes": ["Deluxe", "Executive", "Suite"],
+            "contact": "+91-22-66933333"
+          },
+          {
+            "id": "hotel_mumbai_006",
+            "name": "Sun-n-Sand Hotel",
+            "address": "39, Juhu Beach, Mumbai 400049",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Beach View", "Pool", "Restaurant", "Bar"],
+            "rating": 3.9,
+            "roomTypes": ["Standard", "Deluxe", "Suite"],
+            "contact": "+91-22-66938888"
+          }
+        ]
+      }
+    ]
+  },
+  "delhi": {
+    "places": [
+      {
+        "name": "India Gate",
+        "hotels": [
+          {
+            "id": "hotel_delhi_001",
+            "name": "The Leela Palace New Delhi",
+            "address": "Chanakyapuri, Diplomatic Enclave, New Delhi 110023",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Luxury Spa", "Fine Dining", "Pool", "Butler Service"],
+            "rating": 4.7,
+            "roomTypes": ["Palace Room", "Suite", "Royal Suite"],
+            "contact": "+91-11-39331000"
+          },
+          {
+            "id": "hotel_delhi_002",
+            "name": "The Imperial New Delhi",
+            "address": "Janpath, New Delhi 110001",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Historic Hotel", "Art Deco", "Multiple Restaurants", "Spa"],
+            "rating": 4.6,
+            "roomTypes": ["Classic Room", "Suite", "Imperial Suite"],
+            "contact": "+91-11-23341234"
+          }
+        ]
+      },
+      {
+        "name": "Connaught Place",
+        "hotels": [
+          {
+            "id": "hotel_delhi_003",
+            "name": "The Lalit New Delhi",
+            "address": "Barakhamba Avenue, Connaught Place, New Delhi 110001",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Pool", "Spa", "Multiple Restaurants", "Fitness Center"],
+            "rating": 4.3,
+            "roomTypes": ["Superior", "Deluxe", "Suite"],
+            "contact": "+91-11-44447777"
+          },
+          {
+            "id": "hotel_delhi_004",
+            "name": "Hotel Palace Heights",
+            "address": "D-26/28, Connaught Place, New Delhi 110001",
+            "priceRange": "Low (₹1000-₹3000)",
+            "amenities": ["Central Location", "Restaurant", "WiFi", "Parking"],
+            "rating": 3.8,
+            "roomTypes": ["Standard", "Deluxe"],
+            "contact": "+91-11-43582610"
+          }
+        ]
+      }
+    ]
+  },
+  "jaipur": {
+    "places": [
+      {
+        "name": "Hawa Mahal",
+        "hotels": [
+          {
+            "id": "hotel_jaipur_001",
+            "name": "Rambagh Palace",
+            "address": "Bhawani Singh Road, Jaipur 302005",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Palace Hotel", "Royal Suites", "Fine Dining", "Spa"],
+            "rating": 4.8,
+            "roomTypes": ["Historical Room", "Suite", "Royal Suite"],
+            "contact": "+91-141-2381900"
+          },
+          {
+            "id": "hotel_jaipur_002",
+            "name": "Hotel Pearl Palace",
+            "address": "51, Hathroi Fort, Ajmer Road, Jaipur 302001",
+            "priceRange": "Low (₹1000-₹3000)",
+            "amenities": ["Rooftop Restaurant", "Cultural Events", "Tour Desk", "WiFi"],
+            "rating": 4.2,
+            "roomTypes": ["Standard", "Deluxe", "Family"],
+            "contact": "+91-141-2373700"
+          }
+        ]
+      },
+      {
+        "name": "Amber Fort",
+        "hotels": [
+          {
+            "id": "hotel_jaipur_003",
+            "name": "Fort Rajwada",
+            "address": "Delhi Highway, Jaipur 302028",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Pool", "Spa", "Cultural Performances", "Restaurant"],
+            "rating": 4.1,
+            "roomTypes": ["Deluxe", "Suite", "Royal Tent"],
+            "contact": "+91-141-2331481"
+          }
+        ]
+      }
+    ]
+  },
+  "kerala": {
+    "places": [
+      {
+        "name": "Alleppey Backwaters",
+        "hotels": [
+          {
+            "id": "hotel_kerala_001",
+            "name": "Punnamada Resort",
+            "address": "Punnamada, Alleppey 688006",
+            "priceRange": "Medium (₹3000-₹6000)",
+            "amenities": ["Backwater View", "Houseboat Tours", "Ayurveda Center", "Pool"],
+            "rating": 4.3,
+            "roomTypes": ["Cottage", "Deluxe", "Houseboat"],
+            "contact": "+91-477-2235381"
+          },
+          {
+            "id": "hotel_kerala_002",
+            "name": "Coconut Lagoon",
+            "address": "Kumarakom, Kottayam 686563",
+            "priceRange": "High (₹6000+)",
+            "amenities": ["Heritage Resort", "Backwater Access", "Ayurveda Spa", "Cultural Shows"],
+            "rating": 4.5,
+            "roomTypes": ["Heritage Bungalow", "Villa", "Mansion"],
+            "contact": "+91-481-2524376"
+          }
+        ]
+      }
+    ]
+  }
+}

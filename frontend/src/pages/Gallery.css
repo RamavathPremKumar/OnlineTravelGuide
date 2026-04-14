@@ -1,0 +1,127 @@
+/* ==================== Gallery Container ==================== */
+.container-gallery-section {
+  width: 97%;
+  margin: 0 auto;
+}
+
+/* ==================== Gallery Titles ==================== */
+.gallery-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: rgb(3, 39, 3);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* ==================== Gallery Rows ==================== */
+.gallery-row {
+  display: flex;
+  justify-content: space-between; 
+  width: 100%;
+  flex-wrap: wrap; /* allows wrapping on smaller screens */
+  gap: 15px;
+}
+
+/* ==================== Gallery Image Container ==================== */
+.gallery-img-container {
+  position: relative;
+  width: 24%; /* four images per row on large screens */
+  height: 250px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.gallery-img-container:hover {
+  transform: scale(1.05); /* subtle zoom effect on hover */
+}
+
+/* ==================== Gallery Images ==================== */
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==================== Image Text Overlay ==================== */
+.img-text {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* ==================== Footer ==================== */
+footer {
+  background-color: #343a40;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+footer a {
+  color: #11d038ac;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #f8f9fa;
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+.footer-icons a {
+  color: white;
+  margin: 0 10px;
+  font-size: 1rem;
+}
+
+.footer-icons a:hover {
+  color: #11d038ac;
+}
+
+.contact-info {
+  text-align: left; 
+  margin-top: 10px; 
+}
+
+.contact-title {
+  padding: 0 25%;
+  border-bottom: 2px solid; 
+  margin-bottom: 10px; 
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 1024px) {
+  .gallery-img-container {
+    width: 32%; /* three images per row */
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-img-container {
+    width: 48%; /* two images per row */
+  }
+  .contact-title {
+    padding: 0 10%;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-img-container {
+    width: 100%; /* single column on mobile */
+    margin-bottom: 15px;
+  }
+  .gallery-title {
+    font-size: 1.5rem;
+  }
+}
