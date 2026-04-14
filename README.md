@@ -34,25 +34,26 @@ A sophisticated travel destination discovery and hotel booking platform that ena
 ## Screenshots
 
 ### Home Page
-(./screenshots/home.png)
+![Home Page](./screenshots/homepage.png)
+
 
 ### Login Page
-(./screenshots/login.png)
+![Login Page](./screenshots/login.png)
 
 ### Accommodation Page
-(./screenshots/accommodation.png)
+![Accommodation Page](./screenshots/accommodation.png)
 
 ### Search Page
-(./screenshots/search.png)
+![Search Page](./screenshots/search.png)
 
 ### Gallery Page
-(./screenshots/gallery.png)
+![Gallery Page](./screenshots/gallery.png)
 
 ### Feedback Page
-(./screenshots/feedback.png)
+![Feedback Page](./screenshots/feedback.png)
 
 ### My Bookings Page
-(./screenshots/mybookings.png)
+![My Bookings Page](./screenshots/mybookings.png)
 
 ---
 
