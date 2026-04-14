@@ -41,7 +41,7 @@ A sophisticated travel destination discovery and hotel booking platform that ena
 ![Login Page](./screenshots/login.png)
 
 ### Accommodation Page
-![Accommodation Page](./screenshots/accommodation.png)
+![Accommodation Page](./screenshots/accomodation.png)
 
 ### Search Page
 ![Search Page](./screenshots/search.png)
