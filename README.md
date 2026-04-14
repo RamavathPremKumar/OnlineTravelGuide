@@ -1,146 +1,178 @@
-# Travel Booking and Feedback System
+# Travel Booking & Feedback System
 
-A comprehensive web application for managing travel accommodations, bookings, and verified user feedback.
+A sophisticated travel destination discovery and hotel booking platform that enables users to explore locations, book accommodations, and share verified feedback using advanced mapping and data analysis services.
 
-## Technology Stack
+## Key Features
+
+### Authentication & Authorization
+- Secure login and registration with JWT-based authentication.
+- Role-based access control for Users and Administrators.
+- OTP-verified account creation and password recovery.
+- Professional profile management.
+
+### Destination Discovery
+- Multi-source search using Nominatim and Overpass API (OpenStreetMap).
+- **Voice-Enabled Search**: Integrated voice recognition for hands-free destination and hotel discovery.
+- Detailed place descriptions fetched via Wikipedia API.
+- Search by landmarks, cities, or specific categories (hotels, resorts, attractions).
+- Dynamic location suggestions and auto-complete functionality.
+
+### Accommodation Booking
+- Real-time hotel search near specific landmarks or within cities.
+- Automated booking status management (Confirmed, Pending, Completed, Cancelled).
+- Verified stay verification system linked to user feedback.
+- Detailed pricing and amenity information.
+
+### Feedback & Review System
+- Post-checkout automated feedback request emails via Node-cron.
+- Review submission with multi-photo upload support (Multer).
+- Interactive voting system (Helpful/Not Helpful) on user reviews.
+- Verified review badges for users with confirmed bookings.
+
+---
+
+## Screenshots
+
+### Main Dashboard:
+<img width="1908" height="863" alt="dashboard" src="https://github.com/user-attachments/assets/2f16371c-50d7-49bd-917a-fefb900e5760" />
+
+### Destination Search:
+<img width="1919" height="875" alt="search" src="https://github.com/user-attachments/assets/8ad5f841-4ce5-4a42-8926-dac74078c71b" />
+
+### Booking Management:
+<img width="1916" height="880" alt="booking" src="https://github.com/user-attachments/assets/ead4a24d-6e66-4827-bc9c-152d51c47f8f" />
+
+### User Reviews:
+<img width="1919" height="875" alt="reviews" src="https://github.com/user-attachments/assets/6890841d-74be-43fc-9201-8869a5d909fe" />
+
+---
+
+## Technology Used
 
 ### Frontend
-- React.js
-- React Router
-- Context API
-- CSS3
+- **React 18+** – Modern UI library
+- **React Router** – Client-side routing
+- **Context API** – State management
+- **Tailwind CSS** – Aesthetic styling and utility-first layouts
+- **Lucide React** – Professional iconography
+- **React Speech Recognition** – Voice-to-text integration for search query input.
+
 
 ### Backend
-- Node.js
-- Express.js
-- MongoDB with Mongoose
+- **Node.js** – JavaScript runtime
+- **Express.js** – Robust web framework
+- **MongoDB** – NoSQL database with Mongoose ODM
+- **JWT** – Secure token-based authentication
+- **Node-cron** – Automated scheduling for feedback emails
 
-### Services and Libraries
-- Authentication: JSON Web Token (JWT)
-- Email Service: Nodemailer
-- Task Scheduling: Node-cron
-- File Management: Multer
+### External APIs & Services
+- **Wikipedia API** – Integration for destination summaries and historical data.
+- **OSRM (Open Source Routing Machine)** – Backend routing engine for calculating stay distances and paths.
+- **Nominatim** – Geocoding and reverse geocoding service.
+- **Overpass API** – Advanced spatial data queries for nearby hotels and attractions.
+- **Nodemailer** – Automated transactional email service.
+- **Multer** – Middleware for handling multi-part/form-data for review photos.
 
-## Core Features
-- User authentication and authorization with role-based access control.
-- Accommodation booking system with availability management.
-- Automated booking status updates (Confirmed, Pending, Cancelled, Completed).
-- Feedback and review system supporting photo uploads.
-- Automated feedback request emails dispatched after checkout.
-- Verified stay badges for reviews linked to actual bookings.
-- Interactive helpful and not helpful voting system for reviews.
+---
 
-## API Documentation
+## Prerequisites
 
-### Authentication
-- POST /api/auth/register: Registers a new user account.
-- POST /api/auth/login: Authenticates user and returns a JWT.
+- **Node.js v18+**
+- **MongoDB** (Local instance or MongoDB Atlas)
+- **Git**
+- **SMTP credentials** (e.g., Gmail App Passwords) for automated emails
 
-### Bookings
-- POST /api/bookings: Creates a new accommodation booking.
-- GET /api/bookings/my-bookings: Retrieves the booking history for the authenticated user.
-- GET /api/bookings/my-bookings/with-actual-status: Retrieves bookings with real-time calculated status based on checkout dates.
+---
 
-### Feedback
-- POST /api/feedback: Submits user feedback including optional photo uploads.
-- GET /api/feedback: Retrieves all public reviews and feedback.
-- POST /api/feedback/:id/vote: Submits a helpful or not helpful vote on a specific review.
+## Project Structure
+```bash
+Online-Travel-Guide/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Application views (Home, Search, Booking)
+│   │   ├── services/        # API communication logic
+│   │   └── App.jsx          # Main application entry
+│   ├── public/              # Static assets
+│   └── package.json
+│
+├── backend/
+│   ├── models/              # Mongoose schemas (User, Booking, Feedback)
+│   ├── routes/              # API endpoints (Auth, Hotel, Search, Admin)
+│   ├── controllers/         # Business logic for requests
+│   ├── middleware/          # Auth and error handling
+│   ├── utils/               # Helpers (Email services, Cron jobs)
+│   ├── data/                # Local fallbacks and JSON datasets
+│   ├── uploads/             # Destination for uploaded review images
+│   ├── server.js            # Express server entry point
+│   └── package.json
+│
+└── README.md
+```
 
-## Database Schemas
+## Installation & Setup
 
-### User Model
-- Fields for username, email, password, and roles.
-- Roles: user, admin.
+### 1️⃣ Clone the Repository
 
-### Booking Model
-- Tracks accommodation details, user reference, and stay dates.
-- Status management: Confirmed, Pending, Cancelled, Completed.
+```bash
+git clone https://github.com/Nanduvasanthi/Online-Travel-Guide.git
+cd Online-Travel-Guide
+```
 
-### Feedback Model
-- Includes ratings, text content, and photo references.
-- Tracks vote counts for community engagement.
-- Links to booking ID to verify stay status.
+### 2️⃣ Backend Setup
 
-## System Workflows
+```bash
+cd backend
+npm install
+```
 
-### Booking Workflow
-1. User selects accommodation and submits booking.
-2. System sends a confirmation email.
-3. Booking status automatically transitions based on checkout dates.
+Create a `.env` file in the backend directory:
 
-### Feedback Workflow
-1. A cron job executes daily to identify completed stays.
-2. Feedback request emails are automatically sent to users.
-3. User submits a review with optional photographic evidence.
-
-### Authentication Workflow
-1. JWT token-based authentication protects private routes.
-2. Tokens are included in request headers for authorized API access.
-
-## Environment Configuration
-
-### Backend Environment Variables
-Create a .env file in the backend directory with the following variables:
-```text
+```bash
 PORT=5000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 FRONTEND_URL=http://localhost:5173
+
+# Email Service (SMTP)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_app_password
-SMTP_FROM=system@example.com
+SMTP_PASS=your_gmail_app_password
+SMTP_FROM="Travel Guide System" <your_email@gmail.com>
 ```
 
-### Frontend Environment Variables
-Create a .env file in the frontend directory with the following variables:
-```text
+Start the backend server:
+
+```bash
+npm run dev
+```
+
+### 3️⃣ Frontend Setup
+
+```bash
+cd ../frontend
+npm install
+```
+
+Create a `.env` file in the frontend directory:
+
+```bash
 VITE_API_BASE_URL=http://localhost:5000/api
 ```
 
-## Setup Instructions
+Start the frontend development server:
 
-### Backend Setup
-1. Navigate to the backend directory.
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Configure the environment variables in a .env file.
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
-### Frontend Setup
-1. Navigate to the frontend directory.
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Configure the environment variables in a .env file.
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-## Deployment
-
-### Backend Deployment
-1. Ensure MONGODB_URI is set to a production database instance.
-2. Set NODE_ENV to production.
-3. Deploy the backend service to a platform such as Heroku, AWS, or DigitalOcean.
-
-### Frontend Deployment
-1. Build the production bundle:
-   ```bash
-   npm run build
-   ```
-2. Deploy the resulting dist folder to a static hosting provider like Netlify or Vercel.
+---
 
 ## Troubleshooting
-- Connection Issues: Verify that the MONGODB_URI is correct and the database IP whitelist allows access.
-- Email Failures: Ensure that SMTP credentials are correct and that "Less Secure Apps" or "App Passwords" are configured for the mail server.
-- File Upload Errors: Confirm that the uploads directory exists in the backend and has appropriate write permissions.
-- Authentication Errors: Verify that the JWT_SECRET is consistent across sessions and that the token is correctly passed in the Authorization header.
+
+- **Database Connection**: Ensure your IP address is whitelisted in MongoDB Atlas if using a cloud database.
+- **Email Dispatch**: If emails are not sending, verify that the SMTP credentials are correct and that "Less Secure Apps" access or "App Passwords" are enabled.
+- **Image Uploads**: Ensure the `backend/uploads` directory exists and has write permissions for review photo storage.
+- **Nominatim Rate Limits**: The search uses OpenStreetMap services; frequent requests may be throttled. The application includes a 500ms delay between requests to mitigate this.
